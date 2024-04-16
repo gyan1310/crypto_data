@@ -1,0 +1,39 @@
+#buy {
+    height: 100px;
+    width: 200px;
+    border: 3px solid aquamarine;
+    display: inline-flex;
+    padding-inline-end: 10px;
+    text-decoration: dashed;
+}
+
+#sell {
+    height: 100px;
+    width: 200px;
+    border: 3px solid red ;
+    display: inline-flex;
+    padding-inline-start: 10px;
+    text-decoration: aqua;
+}
+
+.coin-item {
+    display: flex;
+    height: 50px;
+    width: 500px;
+    border: 1px solid black;
+}
+#coin-image {
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+}
+
+#coin-image-div {
+    margin-right: 30px;
+}
+#coin-name-div {
+    margin-right: 30px;
+}
+#coin-price-div {
+    margin-right: 30px;
+}
