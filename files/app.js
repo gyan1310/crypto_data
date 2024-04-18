@@ -102,28 +102,63 @@ function display_100_coins() {
 }
 
 async function get_data () {
-    api_url = "http://127.0.0.1:5000/btc_data"
     try {
-        const response = await fetch(api_url);
-        if (!response.ok) {
-            throw new error("unable to fetch the data some issue with the api or with your method to send data ")
+        const api_url_get_data = "http://127.0.0.1:5000/btc_data";
+        const response = await fetch(api_url_get_data)
+        
+        if(!response.ok){
+            throw new error("lund koi data nahi aaa raha kuch bakchodi hui hai bhosad-pappu 😁", error)
         }
         const data = await response.json()
-        console.log("btc data ", data)
+        console.log("retrived data = ", data)
 
-        const timedata = []
+        // create an array to store the data and do bakchodi 
 
-        for ( let i = 0; i< data.length; i++) {
-            const time_data = data[i][0]
-            timedata.push(time_data)
+        const crypto_data = []
+
+        for (const timestamp in data) {
+            if (data.hasOwnProperty(timestamp)) {
+                const btc_data = data[timestamp]
+
+                // appending the important things in the variable to create the dict
+                const open_p = btc_data["Open"]
+                const close_p = btc_data["Close"]
+                const high_p = btc_data["High"]
+                const low_p = btc_data["Low"]
+
+                const data_dict = {
+                    time_stamp : timestamp,
+                    open_price : open_p,
+                    close_price : close_p,
+                    high_price : high_p,
+                    low_price : low_p
+                }
+                crypto_data.push(data_dict)
+            }
         }
-        console.log(timedata)
-        return timedata
+        console.log(' data preview ', crypto_data )
+        return crypto_data
     } catch (error) {
-        console.log("error fetching btc data", error)
+        console.log("phir se kuch bakchodi ho gai betichod ")
     }
 }
-get_data()
-    .then({
 
-    })
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const crypto_data = await get_data()
+        const print_on_screen = document.querySelector("#result-c")
+        crypto_data.forEach(entry => {
+            const entryHTML = `
+                <div>
+                    <p>Open Price: ${entry.open_price}</p>
+                    <p>High Price: ${entry.high_price}</p>
+                    <p>Low Price: ${entry.low_price}</p>
+                    <p>Close Price: ${entry.close_price}</p>
+                </div>
+            `;
+            print_on_screen.innerHTML += entryHTML;
+        })
+    } catch(error) {
+        console.log(error)
+    }
+})
